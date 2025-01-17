@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
@@ -9,7 +10,7 @@ public class login extends JFrame {
 
     public login() {
         setTitle("Login Ke bengkel");
-        setSize(300, 175);
+        setSize(300, 300); // Ukuran ditingkatkan agar sesuai dengan gambar yang diskalakan
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -25,24 +26,33 @@ public class login extends JFrame {
     private void placeComponents(JPanel panel) {
         panel.setLayout(null);
 
+        // Tambahkan gambar di atas text field
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/gambar/auth.png"));
+        Image scaledImage = originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+        JLabel imgLabel = new JLabel(scaledIcon);
+        imgLabel.setBounds(100, 10, 100, 100); // Atur posisi dan ukuran gambar
+        panel.add(imgLabel);
+
         JLabel userLabel = new JLabel("Username:");
-        userLabel.setBounds(10, 20, 80, 25);
+        userLabel.setBounds(10, 120, 80, 25);
         panel.add(userLabel);
 
         txtUsername = new JTextField(20);
-        txtUsername.setBounds(100, 20, 165, 25);
+        txtUsername.setBounds(100, 120, 165, 25);
         panel.add(txtUsername);
 
         JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(10, 50, 80, 25);
+        passwordLabel.setBounds(10, 150, 80, 25);
         panel.add(passwordLabel);
 
         txtPassword = new JPasswordField(20);
-        txtPassword.setBounds(100, 50, 165, 25);
+        txtPassword.setBounds(100, 150, 165, 25);
         panel.add(txtPassword);
 
         btnLogin = new JButton("Login");
-        btnLogin.setBounds(10, 80, 255, 25);
+        btnLogin.setBounds(10, 190, 255, 25);
         panel.add(btnLogin);
     }
 
@@ -58,10 +68,14 @@ public class login extends JFrame {
 
             if (rs.next()) {
                 JOptionPane.showMessageDialog(this, "Login Successful!");
+                // Buka halaman Dashboard
+                new Dashboard().setVisible(true);
+                dispose(); // Tutup jendela login
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
         }
     }
 
