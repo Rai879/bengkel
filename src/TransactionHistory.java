@@ -16,6 +16,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JOptionPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class TransactionHistory extends JFrame {
     private JTable transactionTable;
@@ -30,6 +33,14 @@ public class TransactionHistory extends JFrame {
         setSize(800, 600); // Adjusted size to accommodate new components
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
+        
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new Dashboard().setVisible(true);
+                    dispose();
+            }
+        });
 
         // Initialize table model with columns
         String[] columns = {

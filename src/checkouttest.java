@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.JOptionPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class checkouttest extends JFrame {
@@ -19,8 +22,16 @@ public class checkouttest extends JFrame {
     public checkouttest() {
         setTitle("Checkout System");
         setSize(600, 450); // Increased height for new layout
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
+        
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new Dashboard().setVisible(true);
+                    dispose();
+            }
+        });
 
         // Search field
         lblSearch = new JLabel("Cari Barang:");
